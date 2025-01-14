@@ -1,0 +1,26 @@
+description: Simple MQTT API for phase count switching setups (without EnergyManager)
+config:
+  initial_ac_max_phase_count:
+    description: The initial count of phases provided to the EV.
+    type: integer
+    minimum: 1
+    maximum: 3
+    default: 3
+  initial_ac_max_current_A:
+    description: The initial maximum current (per phase) in Ampere provided to the EV.
+    type: number
+    minimum: 6
+    maximum: 80
+    default: 16
+provides:
+  empty:
+    description: Nothing
+    interface: empty
+requires:
+  energy:
+    interface: energy
+enable_external_mqtt: true
+metadata:
+  license: https://opensource.org/license/gpl-3-0
+  authors:
+    - Michael Heimpold

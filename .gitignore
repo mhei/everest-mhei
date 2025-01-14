@@ -1,0 +1,7 @@
+*build
+*build-cross
+.cache/
+workspace.yaml
+.vscode/
+*.patch
+*.diff
