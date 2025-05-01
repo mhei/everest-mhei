@@ -26,12 +26,17 @@ void SimpleSwitch3ph1phAPI::enforce_limits() {
 
 void SimpleSwitch3ph1phAPI::init() {
     std::scoped_lock lock(this->mutex);
+    auto tp = date::utc_clock::now();
     types::energy::LimitsRes limits_res;
 
-    limits_res.ac_max_current_A = this->config.initial_ac_max_current_A;
-    limits_res.ac_max_phase_count = this->config.initial_ac_max_phase_count;
+    limits_res.ac_max_current_A.emplace(types::energy::NumberWithSource{
+        static_cast<float>(this->config.initial_ac_max_current_A), "SimpleSwitch3ph1phAPI"});
+    limits_res.ac_max_phase_count.emplace(
+        types::energy::IntegerWithSource{this->config.initial_ac_max_phase_count, "SimpleSwitch3ph1phAPI"});
 
     this->limits.limits_root_side = limits_res;
+    this->limits.schedule.emplace_back(
+        types::energy::ScheduleResEntry{Everest::Date::to_rfc3339(tp), limits_res, std::nullopt});
 
     this->r_energy->subscribe_energy_flow_request([this](types::energy::EnergyFlowRequest e) {
         std::scoped_lock lock(this->mutex);
@@ -41,7 +46,7 @@ void SimpleSwitch3ph1phAPI::init() {
 
         // publish the limits at least once if not yet done
         if (not this->initial_limits_pushed) {
-            json l(this->limits.limits_root_side.value());
+            json l(this->limits.limits_root_side);
             EVLOG_debug << "Pushing initial limits: " << l.dump();
             this->enforce_limits();
             this->initial_limits_pushed = true;
