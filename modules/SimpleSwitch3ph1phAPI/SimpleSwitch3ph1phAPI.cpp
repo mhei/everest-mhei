@@ -17,10 +17,6 @@ using namespace std::chrono_literals;
 namespace module {
 
 void SimpleSwitch3ph1phAPI::enforce_limits() {
-    auto tp = date::utc_clock::now();
-
-    this->limits.valid_until = Everest::Date::to_rfc3339(tp + 3600s);
-
     this->r_energy->call_enforce_limits(this->limits);
 }
 
@@ -34,6 +30,7 @@ void SimpleSwitch3ph1phAPI::init() {
     limits_res.ac_max_phase_count.emplace(
         types::energy::IntegerWithSource{this->config.initial_ac_max_phase_count, "SimpleSwitch3ph1phAPI"});
 
+    this->limits.valid_for = 3600;
     this->limits.limits_root_side = limits_res;
     this->limits.schedule.emplace_back(
         types::energy::ScheduleResEntry{Everest::Date::to_rfc3339(tp), limits_res, std::nullopt});
