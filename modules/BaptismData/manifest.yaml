@@ -1,0 +1,10 @@
+description: >-
+  Provides the device's baptism data via key-value store interface
+provides:
+  kvs:
+    interface: kvs
+    description: The key-value store interface
+metadata:
+  license: https://opensource.org/license/gpl-3-0
+  authors:
+    - Michael Heimpold

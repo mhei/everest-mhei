@@ -1,0 +1,13 @@
+description: >-
+  Provides the device's baptism data via key-value store interface
+provides:
+  empty:
+    description: This module provides nothing
+    interface: empty
+requires:
+  kvs:
+    interface: kvs
+metadata:
+  license: https://opensource.org/license/gpl-3-0
+  authors:
+    - Michael Heimpold
