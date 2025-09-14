@@ -1,0 +1,23 @@
+description: Use a Linux evdev kernel device event to terminate charging session gracefully
+config:
+  device:
+    description: >-
+      The device name to use, e.g. /dev/input/event1
+      But usually, you want to use a specific event device, so it would look like:
+      /dev/input/by-id/...
+    type: string
+  debug:
+    description: Be verbose when an event was recognized
+    type: boolean
+    default: false
+provides:
+  empty:
+    description: This module does not provide any interface.
+    interface: empty
+requires:
+  evse_manager:
+    interface: evse_manager
+metadata:
+  license: https://opensource.org/license/gpl-3-0
+  authors:
+    - Michael Heimpold
