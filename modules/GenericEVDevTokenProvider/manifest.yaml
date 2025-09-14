@@ -1,0 +1,20 @@
+description: RFID/NFC token provider using a Linux evdev kernel device
+config:
+  device:
+    description: >-
+      The device name to use, e.g. /dev/input/event1
+      But usually, you want to use a specific event device, so it would look like:
+      /dev/input/by-id/usb-Miao-Xiao-Zhi_IC_ID_card_reader-event-kbd
+    type: string
+  debug:
+    description: Be verbose when a token was recognized
+    type: boolean
+    default: false
+provides:
+  main:
+    description: Implementation of RFID/NFC token provider
+    interface: auth_token_provider
+metadata:
+  license: https://opensource.org/license/gpl-3-0
+  authors:
+    - Michael Heimpold
