@@ -40,6 +40,16 @@ void SimpleEVDevTxStopBtn::init() {
         return;
     }
 
+    // translate key name into code
+    this->event_code = libevdev_event_code_from_name(EV_KEY, this->config.key.c_str());
+    if (this->event_code == -1) {
+        EVLOG_error << "Key name '" << this->config.key << "' is not recognized.";
+        libevdev_free(this->dev);
+        close(this->poll_fd.fd);
+        this->poll_fd.fd = -1;
+        return;
+    }
+
     invoke_init(*p_empty);
 }
 
@@ -59,17 +69,10 @@ void SimpleEVDevTxStopBtn::ready() {
             struct input_event ev;
 
             while ((rv = libevdev_next_event(this->dev, LIBEVDEV_READ_FLAG_NORMAL, &ev)) == 0) {
-                if (ev.type == EV_KEY && ev.value == 0) {
-                    switch (ev.code) {
-                    case KEY_STOP: {
-                        types::evse_manager::StopTransactionRequest req;
-                        req.reason = types::evse_manager::StopTransactionReason::Local;
-                        this->r_evse_manager->call_stop_transaction(req);
-                        break;
-                    }
-                    default:
-                        break;
-                    }
+                if (ev.type == EV_KEY && ev.value == 0 && ev.code == this->event_code) {
+                    types::evse_manager::StopTransactionRequest req;
+                    req.reason = types::evse_manager::StopTransactionReason::Local;
+                    this->r_evse_manager->call_stop_transaction(req);
                 }
             }
 

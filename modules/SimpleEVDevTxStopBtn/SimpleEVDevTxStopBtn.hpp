@@ -26,6 +26,7 @@ namespace module {
 
 struct Conf {
     std::string device;
+    std::string key;
     bool debug;
 };
 
@@ -64,6 +65,9 @@ private:
 
     // libevdev handle
     struct libevdev* dev;
+
+    // key code to trigger on
+    int event_code;
     // ev@211cfdbe-f69a-4cd6-a4ec-f8aaa3d1b6c8:v1
 };
 

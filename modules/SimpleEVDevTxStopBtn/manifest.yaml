@@ -6,6 +6,13 @@ config:
       But usually, you want to use a specific event device, so it would look like:
       /dev/input/by-id/...
     type: string
+  key:
+    description: >-
+      The key code name which is used to trigger the charging stop. See
+      https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
+      and check what your board defined/mapped.
+    type: string
+    default: KEY_STOP
   debug:
     description: Be verbose when an event was recognized
     type: boolean
