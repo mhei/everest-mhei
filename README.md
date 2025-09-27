@@ -18,7 +18,8 @@ And a small note: the second version number has a leading zero here so that it s
 
 | Tag       | EVerest release              |
 |-----------|------------------------------|
-| 2024.09.0 | 2024.9.0 or newer[^or_newer] |
+| 2025.08.0 | 2025.8.0 or newer[^or_newer] |
+| 2024.09.0 | 2025.7.0 <br> 2024.9.0       |
 
 [^or_newer]: Newer releases or upstream's `main` branch may already contain incompatible changes.
              The compatibility matrix will be updated with each new tag in this repository.

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14.7)
 
 project(everest-mhei
-    VERSION 2024.09.0
+    VERSION 2025.08.0
     DESCRIPTION "Various EVerest modules"
     LANGUAGES CXX
 )
