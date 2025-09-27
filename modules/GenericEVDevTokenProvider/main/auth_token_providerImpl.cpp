@@ -5,7 +5,9 @@
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
+#if !DISABLE_EDM
 #include <everest/helpers/helpers.hpp>
+#endif
 #include <fcntl.h>
 #include <iostream>
 #include <libevdev/libevdev.h>
@@ -14,6 +16,18 @@
 #include <sys/poll.h>
 #include <unistd.h>
 #include <unordered_map>
+
+#if DISABLE_EDM
+namespace everest {
+namespace helpers {
+
+types::authorization::ProvidedIdToken& redact(types::authorization::ProvidedIdToken& token) {
+    return token;
+}
+
+} // namespace helpers
+} // namespace everest
+#endif
 
 namespace module {
 namespace main {
