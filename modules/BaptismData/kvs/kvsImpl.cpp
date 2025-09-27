@@ -45,6 +45,7 @@ void kvsImpl::handle_store(std::string& key,
                            std::variant<std::nullptr_t, Array, Object, bool, double, int, std::string>& value) {
     // do nothing - baptism data is read-only
     EVLOG_debug << "handle_store(\"" << key << "\") ignored";
+    (void)value;
 }
 
 std::variant<std::nullptr_t, Array, Object, bool, double, int, std::string> kvsImpl::handle_load(std::string& key) {
