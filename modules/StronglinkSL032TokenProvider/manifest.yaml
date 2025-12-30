@@ -1,0 +1,42 @@
+description: Token provider interface for Stronglink SL032 RFID readers
+config:
+  device:
+    description: The serial port device the hardware is connected to.
+    type: string
+    default: /dev/ttyUSB0
+  baudrate:
+    description: The baudrate used on the serial port.
+    type: integer
+    minimum: 9600
+    maximum: 115200
+    default: 9600
+  gensio:
+    description: >-
+      The string passed to libgensio for accessing the serial port. See
+      `https://github.com/cminyard/gensio` or `man 5 gensio` for details.
+    type: string
+    default: serialdev(nouucplock=false),{device},{baudrate}N81
+  interval_ms:
+    description: Time between subsequent polls to the reader (in ms)
+    type: integer
+    minimum: 0
+    maximum: 2000
+    default: 250
+  ignore_echo:
+    description: >-
+      On some hardware every message that is sent needs to be read back due
+      to hardware echo. This setting enables a filter to take care of this.
+    type: boolean
+    default: false
+  debug:
+    description: Be verbose when a token was recognized
+    type: boolean
+    default: false
+provides:
+  main:
+    description: Implementation of the driver functionality
+    interface: auth_token_provider
+metadata:
+  license: https://opensource.org/license/gpl-3-0
+  authors:
+    - Michael Heimpold
