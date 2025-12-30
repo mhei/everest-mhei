@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright Pionix GmbH and Contributors to EVerest
+// SPDX-License-Identifier: GPL-3.0-only
+// Copyright Michael Heimpold
 #ifndef EMPTY_EMPTY_IMPL_HPP
 #define EMPTY_EMPTY_IMPL_HPP
 

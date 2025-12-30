@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-// Copyright Pionix GmbH and Contributors to EVerest
+// SPDX-License-Identifier: GPL-3.0-only
+// Copyright Michael Heimpold
 #ifndef BAPTISM_DATA_TEST_HPP
 #define BAPTISM_DATA_TEST_HPP
 
