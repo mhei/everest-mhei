@@ -26,4 +26,6 @@ option(BUILD_TEST_MODULES "Build testing and development helper modules" OFF)
 # search for package PkgConfig
 find_package(PkgConfig REQUIRED)
 
+add_subdirectory("lib")
+
 ev_add_project()
