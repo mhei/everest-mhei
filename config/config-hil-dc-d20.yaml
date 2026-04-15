@@ -1,0 +1,181 @@
+active_modules:
+  evse_bsp:
+    module: EVAchargeSEEVSE
+    config_module:
+      kl02_gensio: telnet(rfc2217),tcp,ccm1,5000
+      connector_type: IEC62196Type2Cable
+  evse_slac:
+    module: EvseSlac
+    config_implementation:
+      main:
+        device: vxlan0
+  evse_iso15118:
+    module: Evse15118D20
+    config_module:
+      device: vxlan0
+    connections:
+      security:
+        - module_id: evse_security
+          implementation_id: main
+  evse_manager:
+    module: EvseManager
+    config_module:
+      connector_id: 1
+      evse_id: DE*MHE*E12345*1
+      evse_id_din: 49A80737A15058
+      session_logging: true
+      session_logging_xml: false
+      session_logging_path: /tmp/everest-logs
+      charge_mode: DC
+      payment_enable_contract: false
+      bpt_channel: Unified
+      bpt_generator_mode: GridFollowing
+    connections:
+      bsp:
+        - module_id: evse_bsp
+          implementation_id: evse_board_support
+      slac:
+        - module_id: evse_slac
+          implementation_id: main
+      hlc:
+        - module_id: evse_iso15118
+          implementation_id: charger
+      powersupply_DC:
+        - module_id: powersupply_dc
+          implementation_id: main
+      powermeter_car_side:
+        - module_id: powersupply_dc
+          implementation_id: powermeter
+      imd:
+        - module_id: imd
+          implementation_id: main
+  powersupply_dc:
+    module: DCSupplySimulator
+  imd:
+    module: IMDSimulator
+  auth:
+    module: Auth
+    config_module:
+      connection_timeout: 10
+      selection_algorithm: FindFirst
+    connections:
+      token_provider:
+        - module_id: token_provider
+          implementation_id: main
+      token_validator:
+        - module_id: token_validator
+          implementation_id: main
+      evse_manager:
+        - module_id: evse_manager
+          implementation_id: evse
+  token_provider:
+    module: DummyTokenProvider
+    config_implementation:
+      main:
+        token: CAFEBABE
+    connections:
+      evse:
+        - module_id: evse_manager
+          implementation_id: evse
+  token_validator:
+    module: DummyTokenValidator
+    config_implementation:
+      main:
+        validation_result: Accepted
+        validation_reason: Token seems valid
+        sleep: 0.25
+  evse_security:
+    module: EvseSecurity
+    config_module:
+      private_key_password: "123456"
+  energy_manager:
+    module: EnergyManager
+    config_module:
+      schedule_total_duration: 1
+      schedule_interval_duration: 60
+    connections:
+      energy_trunk:
+        - module_id: grid_connection_point
+          implementation_id: energy_grid
+  grid_connection_point:
+    module: EnergyNode
+    config_module:
+      fuse_limit_A: 40.0
+      phase_count: 3
+    connections:
+      energy_consumer:
+        - module_id: api_sink
+          implementation_id: energy_grid
+  api_sink:
+    module: EnergyNode
+    mapping:
+      module:
+        evse: 1
+    config_module:
+      fuse_limit_A: 32.0
+      phase_count: 3
+    connections:
+      energy_consumer:
+        - module_id: evse_manager
+          implementation_id: energy_grid
+  api:
+    module: API
+    connections:
+      evse_manager:
+        - module_id: evse_manager
+          implementation_id: evse
+      error_history:
+        - module_id: error_history
+          implementation_id: error_history
+      evse_energy_sink:
+        - module_id: api_sink
+          implementation_id: external_limits
+  error_history:
+    module: ErrorHistory
+    config_implementation:
+      error_history:
+        database_path: /tmp/error_history.db
+
+  ev_bsp:
+    module: EVAchargeSEEV
+    config_module:
+      kl02_gensio: telnet(rfc2217),tcp,ccp1,5000
+  ev_slac:
+    module: EvSlac
+    config_implementation:
+      main:
+        device: vxlan1
+  ev_iso15118:
+    module: PyEvJosev
+    config_module:
+      device: vxlan1
+      supported_DIN70121: false
+      supported_ISO15118_2: false
+      supported_ISO15118_20_DC: true
+      tls_active: true
+      enable_tls_1_3: true
+  ev_manager:
+    module: EvManager
+    config_module:
+      connector_id: 1
+      auto_enable: true
+      auto_exec: true
+      auto_exec_commands: sleep 3;iso_wait_slac_matched;iso_start_v2g_session DC;iso_wait_pwr_ready;iso_dc_power_on;iso_wait_for_stop 15;iso_wait_v2g_session_stopped;unplug;
+      dc_target_current: 20
+      dc_target_voltage: 400
+    connections:
+      ev_board_support:
+        - module_id: ev_bsp
+          implementation_id: ev_board_support
+      slac:
+        - module_id: ev_slac
+          implementation_id: main
+      ev:
+        - module_id: ev_iso15118
+          implementation_id: ev
+  ev_api:
+    module: EvAPI
+    connections:
+      ev_manager:
+        - implementation_id: ev_manager
+          module_id: ev_manager

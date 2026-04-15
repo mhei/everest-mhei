@@ -28,4 +28,6 @@ find_package(PkgConfig REQUIRED)
 
 add_subdirectory("lib")
 
+add_subdirectory("config")
+
 ev_add_project()

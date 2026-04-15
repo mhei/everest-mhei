@@ -1,0 +1,13 @@
+active_modules:
+  bsp:
+    module: EVAchargeSEEVSE
+    config_module:
+      kl02_gensio: telnet(rfc2217),tcp,ccp,5000
+      connector_type: IEC62196Type2Socket
+  cli:
+    standalone: true
+    module: BUEvseBoardSupport
+    connections:
+      bsp:
+        - module_id: bsp
+          implementation_id: evse_board_support
