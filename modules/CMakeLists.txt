@@ -9,3 +9,6 @@ if (BUILD_TEST_MODULES)
     ev_add_cpp_module(BaptismDataTest)
     ev_add_cpp_module(SimpleSwitch3ph1phAPI)
 endif()
+
+ev_add_cpp_module(EVAchargeSEEV)
+ev_add_cpp_module(EVAchargeSEEVSE)
