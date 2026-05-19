@@ -1,0 +1,43 @@
+active_modules:
+  ev_bsp:
+    module: MCSTesterEV
+    config_module:
+      gensio: serialdev,/dev/ttyACM1,115200N81,local
+  ev_slac:
+    module: DummyEvSlac
+  ev_iso15118:
+    module: PyEvJosev
+    config_module:
+      device: enx68271992738d
+      supported_DIN70121: false
+      supported_ISO15118_2: false
+      supported_ISO15118_20_DC: true
+      tls_active: true
+      enable_tls_1_3: true
+      supported_d20_energy_services: MCS
+  ev_manager:
+    module: EvManager
+    config_module:
+      connector_id: 1
+      auto_enable: true
+      auto_exec: true
+      auto_exec_commands: wait_for_real_plugin;iso_wait_slac_matched;iso_start_v2g_session DC;iso_wait_pwr_ready;iso_dc_power_on;iso_wait_for_stop 15;iso_wait_v2g_session_stopped;unplug;
+      auto_exec_infinite: true
+      dc_target_current: 20
+      dc_target_voltage: 400
+    connections:
+      ev_board_support:
+        - module_id: ev_bsp
+          implementation_id: ev_board_support
+      slac:
+        - module_id: ev_slac
+          implementation_id: main
+      ev:
+        - module_id: ev_iso15118
+          implementation_id: ev
+  ev_api:
+    module: EvAPI
+    connections:
+      ev_manager:
+        - implementation_id: ev_manager
+          module_id: ev_manager

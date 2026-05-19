@@ -1,4 +1,5 @@
 generate_config_run_script(CONFIG hil-dc-d20)
+generate_config_run_script(CONFIG hil-mcs-ev)
 
 add_subdirectory(bringup)
 

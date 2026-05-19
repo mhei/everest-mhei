@@ -1,0 +1,16 @@
+description: Driver module for MCS tester board (EV role)
+config:
+  gensio:
+    description: The gensio string used for the connection to the MCU.
+    type: string
+    default: serialdev,/dev/ttyACM1,115200N81,local
+provides:
+  ev_board_support:
+    interface: ev_board_support
+    description: >-
+      Provides the EVerest board support interface for this platform, i.e.
+      low-level control/evaluation of control pilot, proximity pilot and contactor.
+metadata:
+  license: https://opensource.org/license/gpl-3-0
+  authors:
+    - Michael Heimpold
