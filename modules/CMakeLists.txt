@@ -12,3 +12,4 @@ endif()
 
 ev_add_cpp_module(EVAchargeSEEV)
 ev_add_cpp_module(EVAchargeSEEVSE)
+ev_add_cpp_module(DummyEvSlac)

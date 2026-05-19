@@ -1,0 +1,9 @@
+description: Dummy implementation for SLAC on EV side
+provides:
+  main:
+    interface: ev_slac
+    description: SLAC interface implementation for EV side
+metadata:
+  license: https://opensource.org/license/gpl-3-0
+  authors:
+    - Michael Heimpold
