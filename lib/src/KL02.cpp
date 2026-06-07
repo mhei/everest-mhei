@@ -272,7 +272,8 @@ void KL02::cp_voltages_to_cp_state(const KL02USSProtocol::CPVoltage& v) {
         new_cp_state = types::board_support_common::Event::F;
     }
 
-    if (!this->pwm_status) {
+    // pin CP state in EVSE mode
+    if (!this->is_ev and !this->pwm_status) {
         new_cp_state = types::board_support_common::Event::E;
     }
 
