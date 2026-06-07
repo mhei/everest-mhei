@@ -1,0 +1,12 @@
+active_modules:
+  bsp:
+    module: MCSTesterEV
+    config_module:
+      gensio: serialdev,/dev/ttyACM1,115200N81,local
+  cli:
+    standalone: true
+    module: BUEvBoardSupport
+    connections:
+      bsp:
+        - module_id: bsp
+          implementation_id: ev_board_support

@@ -1,0 +1,12 @@
+active_modules:
+  bsp:
+    module: EVAchargeSEEV
+    config_module:
+      kl02_gensio: telnet(rfc2217),tcp,ccp1,5000
+  cli:
+    standalone: true
+    module: BUEvBoardSupport
+    connections:
+      bsp:
+        - module_id: bsp
+          implementation_id: ev_board_support
