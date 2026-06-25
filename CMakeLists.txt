@@ -15,6 +15,8 @@ if(NOT DISABLE_EDM)
     # FIXME (aw): this implicit definition for child projects is hacky
     set(THIRD_PARTY_APP_DST "${CMAKE_INSTALL_LIBEXECDIR}/everest/3rd_party")
 
+    set(SIGSLOT_ENABLE_INSTALL ON CACHE BOOL "Enable install rules for PalSigslot" FORCE)
+
     evc_setup_edm()
 else()
     find_package(everest-core REQUIRED)
