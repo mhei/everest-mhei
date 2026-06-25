@@ -1,4 +1,4 @@
-To execute the HIL setup `config-hil-dc-d20`, you need to EVAcharge SE boards.
+To execute the HIL setup `config-hil-dc-d20`, you need two EVAcharge SE boards.
 On the first one, the QCA chipset should be configured as EVSE (called CCM),
 on the second one, the role must be EV (called CCP).
 
@@ -6,7 +6,7 @@ It is assumed that on both boards ser2net is configured and listens on
 TCP port 5000, forwarding an incoming telnet connection to the KL02 MCU.
 
 Also it is assumed, that your kernel has support for VXLANs and that on both
-EVAcharge SEs a bridge between eth1 and such an VXLAN is setup.
+EVAcharge SEs a bridge between eth1 and such a VXLAN is set up.
 This is used to tunnel the eth1 (aka PLC) connection to the host running
 this HIL setup.
 
