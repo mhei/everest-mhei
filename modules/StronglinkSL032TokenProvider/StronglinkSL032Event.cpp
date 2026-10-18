@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // Copyright Michael Heimpold
 #include "StronglinkSL032Event.hpp"
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 using namespace StronglinkSL032;
 

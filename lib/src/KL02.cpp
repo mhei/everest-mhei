@@ -2,7 +2,7 @@
 // Copyright Michael Heimpold
 #include "KL02.hpp"
 #include <KL02USSProtocol.hpp>
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 KL02::KL02(gensios::Waiter* w, bool is_ev, bool use_pp, bool use_pp_pullup) :
     waiter(w), is_ev(is_ev), use_pp(use_pp), use_pp_pullup(use_pp_pullup) {

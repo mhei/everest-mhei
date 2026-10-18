@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cstring>
 #include <everest/logging.hpp>
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 namespace StronglinkSL032 {
 
